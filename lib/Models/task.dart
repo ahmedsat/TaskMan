@@ -47,25 +47,28 @@ class Task {
     List encodedList = jsonDecode(tasks) as List<dynamic>;
     List<Task> decodedList =
         encodedList.map<Task>((e) => Task.fromJson(e)).toList();
+    decodedList = sort(decodedList);
+    return decodedList;
+  }
 
-    decodedList.sort((a, b) {
+  static List<Task> sort(List<Task> tasks) {
+    tasks.sort((a, b) {
       DateTime deadLineA = DateTime.parse(a.deadLine);
       DateTime deadLineB = DateTime.parse(b.deadLine);
       return deadLineA.compareTo(deadLineB);
     });
 
-    decodedList.sort((a, b) {
+    tasks.sort((a, b) {
       return a.priority.compareTo(b.priority);
     });
 
-    decodedList.sort(
+    tasks.sort(
       (a, b) {
         if (a.finished == b.finished) return 0;
         if (a.finished && !b.finished) return 1;
         return -1;
       },
     );
-
-    return decodedList;
+    return tasks;
   }
 }
