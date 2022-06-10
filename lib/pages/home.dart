@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:taskman/Models/task.dart';
 import 'package:taskman/pages/all_tasks.dart';
+import 'package:taskman/pages/current_task.dart';
 import 'package:taskman/utils/constants.dart';
 
 class Home extends StatefulWidget {
@@ -17,9 +18,8 @@ class _HomeState extends State<Home> {
   List<Task>? tasks;
 
   static final List<Widget> _widgetOptions = <Widget>[
-    const Text(
-      'Index 0: Home',
-      // style: optionStyle,
+    const Center(
+      child: null,
     ),
     AllTasks(),
     const Text(
@@ -54,6 +54,7 @@ class _HomeState extends State<Home> {
                   return Text('Error: ${snapshot.error}');
                 } else {
                   tasks = snapshot.data;
+                  _widgetOptions[0] = CurrentTask(task: tasks![0]);
                   _widgetOptions[1] = AllTasks(
                     tasks: tasks,
                   );
