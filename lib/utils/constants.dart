@@ -1,2 +1,2 @@
 // constants
-const tasks_key = "Tasks";
+const tasksKey = "Tasks";

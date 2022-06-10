@@ -7,7 +7,7 @@ import 'package:taskman/utils/constants.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   initPrefs();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -20,15 +20,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Home(),
+      home: const Home(),
     );
   }
 }
 
 void initPrefs() async {
-  List<Task> tasks = List.empty();
-  tasks = [
-    ...tasks,
+  List<Task> tasks = [
     Task(
       description: "description 1",
       title: "title 1",
@@ -60,5 +58,5 @@ void initPrefs() async {
   String encodedData = Task.encode(tasks);
   final prefs = await SharedPreferences.getInstance();
   await prefs.clear();
-  await prefs.setString(tasks_key, encodedData);
+  await prefs.setString(tasksKey, encodedData);
 }

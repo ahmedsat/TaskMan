@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:taskman/Models/task.dart';
-import 'package:taskman/utils/constants.dart';
+import 'package:taskman/pages/no_tasks_here.dart';
 
 class AllTasks extends StatelessWidget {
   List<Task>? tasks;
@@ -9,16 +8,14 @@ class AllTasks extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+    if (tasks!.isEmpty) return const NoTasksHere();
     return ListView.builder(
       itemCount: tasks?.length,
       itemBuilder: (BuildContext context, int index) {
-        print(tasks![index].priority);
-        print(tasks![index].finished);
         return ListTile(
           title: Card(
             color: tasks![index].finished ? Colors.green : Colors.red,
-            child: Container(
+            child: SizedBox(
               height: 50,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:taskman/Models/task.dart';
-import 'package:taskman/pages/allTasks.dart';
+import 'package:taskman/pages/all_tasks.dart';
 import 'package:taskman/utils/constants.dart';
 
 class Home extends StatefulWidget {
+  const Home({Key? key}) : super(key: key);
+
   @override
   State<Home> createState() => _HomeState();
 }
@@ -40,7 +42,7 @@ class _HomeState extends State<Home> {
         child: FutureBuilder<List<Task>>(
           future: _prefs.then((SharedPreferences prefs) {
             List<Task> tasks =
-                Task.decode(prefs.getString(tasks_key).toString());
+                Task.decode(prefs.getString(tasksKey).toString());
             return tasks;
           }),
           builder: (BuildContext context, AsyncSnapshot<List<Task>> snapshot) {
