@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:taskman/Models/task.dart';
 import 'package:taskman/pages/allTasks.dart';
+import 'package:taskman/utils/constants.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -7,15 +10,17 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   int _selectedIndex = 0;
+  List<Task>? tasks;
 
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
+  static final List<Widget> _widgetOptions = <Widget>[
+    const Text(
       'Index 0: Home',
       // style: optionStyle,
     ),
     AllTasks(),
-    Text(
+    const Text(
       'Index 2: School',
       // style: optionStyle,
     ),
@@ -32,7 +37,40 @@ class _HomeState extends State<Home> {
     return Scaffold(
       appBar: AppBar(),
       body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+        child: FutureBuilder<List<Task>>(
+          future: _prefs.then((SharedPreferences prefs) {
+            List<Task> tasks =
+                Task.decode(prefs.getString(tasks_key).toString());
+
+            tasks.sort((a, b) {
+              DateTime deadLineA = DateTime.parse(a.deadLine);
+              DateTime deadLineB = DateTime.parse(b.deadLine);
+              return deadLineA.compareTo(deadLineB);
+            });
+
+            tasks.sort((a, b) {
+              return a.priority!.compareTo(b.priority!);
+            });
+
+            return tasks;
+          }),
+          builder: (BuildContext context, AsyncSnapshot<List<Task>> snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.waiting:
+                return const CircularProgressIndicator();
+              default:
+                if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                } else {
+                  tasks = snapshot.data;
+                  _widgetOptions[1] = AllTasks(
+                    tasks: tasks,
+                  );
+                  return _widgetOptions.elementAt(_selectedIndex);
+                }
+            }
+          },
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
