@@ -41,17 +41,6 @@ class _HomeState extends State<Home> {
           future: _prefs.then((SharedPreferences prefs) {
             List<Task> tasks =
                 Task.decode(prefs.getString(tasks_key).toString());
-
-            tasks.sort((a, b) {
-              DateTime deadLineA = DateTime.parse(a.deadLine);
-              DateTime deadLineB = DateTime.parse(b.deadLine);
-              return deadLineA.compareTo(deadLineB);
-            });
-
-            tasks.sort((a, b) {
-              return a.priority!.compareTo(b.priority!);
-            });
-
             return tasks;
           }),
           builder: (BuildContext context, AsyncSnapshot<List<Task>> snapshot) {

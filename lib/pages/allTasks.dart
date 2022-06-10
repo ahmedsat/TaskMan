@@ -13,20 +13,28 @@ class AllTasks extends StatelessWidget {
     return ListView.builder(
       itemCount: tasks?.length,
       itemBuilder: (BuildContext context, int index) {
+        print(tasks![index].priority);
+        print(tasks![index].finished);
         return ListTile(
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Text(
-                tasks![index].title,
+          title: Card(
+            color: tasks![index].finished ? Colors.green : Colors.red,
+            child: Container(
+              height: 50,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text(
+                    tasks![index].title,
+                  ),
+                  Text(
+                    "${tasks![index].priority}",
+                  ),
+                  Text(
+                    tasks![index].deadLine,
+                  ),
+                ],
               ),
-              Text(
-                "${tasks![index].priority}",
-              ),
-              Text(
-                tasks![index].deadLine,
-              ),
-            ],
+            ),
           ),
         );
       },

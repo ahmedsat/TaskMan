@@ -34,6 +34,7 @@ void initPrefs() async {
       title: "title 1",
       createdAt: DateTime.now().toString(),
       deadLine: "2022-06-11 16:26:53",
+      finished: true,
     ),
     Task(
       description: "description 2",

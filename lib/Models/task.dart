@@ -5,7 +5,8 @@ class Task {
   String description;
   String createdAt;
   String deadLine;
-  int? priority;
+  int priority;
+  bool finished;
 
   Task({
     required this.title,
@@ -13,6 +14,7 @@ class Task {
     required this.createdAt,
     required this.deadLine,
     this.priority = 5,
+    this.finished = false,
   });
 
   static Map<String, Object?> toMap(Task task) {
@@ -22,16 +24,19 @@ class Task {
       'createdAt': task.createdAt,
       'deadLine': task.deadLine,
       'priority': task.priority,
+      'finished': task.finished,
     };
   }
 
   factory Task.fromJson(Map<String, dynamic> jsonData) {
     return Task(
-        description: jsonData["description"],
-        title: jsonData["title"],
-        deadLine: jsonData["deadLine"],
-        createdAt: jsonData["createdAt"],
-        priority: jsonData['priority']);
+      description: jsonData["description"],
+      title: jsonData["title"],
+      deadLine: jsonData["deadLine"],
+      createdAt: jsonData["createdAt"],
+      priority: jsonData['priority'],
+      finished: jsonData["finished"],
+    );
   }
 
   static String encode(List<Task> tasks) {
@@ -39,7 +44,28 @@ class Task {
   }
 
   static List<Task> decode(String tasks) {
-    List decodedList = jsonDecode(tasks) as List<dynamic>;
-    return decodedList.map<Task>((e) => Task.fromJson(e)).toList();
+    List encodedList = jsonDecode(tasks) as List<dynamic>;
+    List<Task> decodedList =
+        encodedList.map<Task>((e) => Task.fromJson(e)).toList();
+
+    decodedList.sort((a, b) {
+      DateTime deadLineA = DateTime.parse(a.deadLine);
+      DateTime deadLineB = DateTime.parse(b.deadLine);
+      return deadLineA.compareTo(deadLineB);
+    });
+
+    decodedList.sort((a, b) {
+      return a.priority.compareTo(b.priority);
+    });
+
+    decodedList.sort(
+      (a, b) {
+        if (a.finished == b.finished) return 0;
+        if (a.finished && !b.finished) return 1;
+        return -1;
+      },
+    );
+
+    return decodedList;
   }
 }
