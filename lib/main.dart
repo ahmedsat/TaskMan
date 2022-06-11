@@ -27,32 +27,32 @@ class MyApp extends StatelessWidget {
 
 void initPrefs() async {
   List<Task> tasks = [
-    Task(
-      description: "description 1",
-      title: "title 1",
-      createdAt: DateTime.now().toString(),
-      deadLine: "2022-06-11 16:26:53",
-      finished: true,
-    ),
-    Task(
-      description: "description 2",
-      title: "title 2",
-      priority: 1,
-      createdAt: DateTime.now().toString(),
-      deadLine: "2022-06-12 16:26:53",
-    ),
-    Task(
-      description: "description 3",
-      title: "title 3",
-      createdAt: DateTime.now().toString(),
-      deadLine: "2022-06-24 16:26:53",
-    ),
-    Task(
-      description: "description 4",
-      title: "title 4",
-      createdAt: DateTime.now().toString(),
-      deadLine: "2022-06-16 16:26:53",
-    ),
+    // Task(
+    //   description: "description 1",
+    //   title: "title 1",
+    //   createdAt: DateTime.now().toString(),
+    //   deadLine: "2022-06-11 16:26:53",
+    //   finished: true,
+    // ),
+    // Task(
+    //   description: "description 2",
+    //   title: "title 2",
+    //   priority: 1,
+    //   createdAt: DateTime.now().toString(),
+    //   deadLine: "2022-06-12 16:26:53",
+    // ),
+    // Task(
+    //   description: "description 3",
+    //   title: "title 3",
+    //   createdAt: DateTime.now().toString(),
+    //   deadLine: "2022-06-24 16:26:53",
+    // ),
+    // Task(
+    //   description: "description 4",
+    //   title: "title 4",
+    //   createdAt: DateTime.now().toString(),
+    //   deadLine: "2022-06-16 16:26:53",
+    // ),
   ];
 
   String encodedData = Task.encode(tasks);

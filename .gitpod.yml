@@ -55,7 +55,10 @@ ports:
     onOpen: ignore
 # vnc
   - port: 6080
-    onOpen: ignore
+    onOpen: open-browser
+    visibility: public
+    name: "App Test"
+    description: "Test app before build"
 # flutter
   - port: 8080
     onOpen: ignore
