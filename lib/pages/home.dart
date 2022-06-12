@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:taskman/Models/tasks_model.dart';
 import 'package:taskman/controllers/tasks_controler.dart';
+import 'package:taskman/pages/add_task.dart';
 import 'package:taskman/pages/all_tasks.dart';
 import 'package:taskman/pages/current_task.dart';
 import 'package:taskman/pages/no_tasks_here.dart';
@@ -16,7 +17,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-  int _selectedIndex = 0;
+  int _selectedIndex = 2;
   List<Task>? tasks;
   TasksController tc = TasksController.instance;
 
@@ -25,8 +26,7 @@ class _HomeState extends State<Home> {
     // const CircularProgressIndicator(),
     const NoTasksHere(),
     const NoTasksHere(),
-    const CircularProgressIndicator(),
-    const NoTasksHere(),
+    AddTask(),
   ];
 
   void _onItemTapped(int index) {
