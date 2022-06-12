@@ -17,16 +17,14 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-  int _selectedIndex = 2;
+  int _selectedIndex = 0;
   List<Task>? tasks;
   TasksController tc = TasksController.instance;
 
   static final List<Widget> _widgetOptions = <Widget>[
-    // const CircularProgressIndicator(),
-    // const CircularProgressIndicator(),
     const NoTasksHere(),
     const NoTasksHere(),
-    AddTask(),
+    const CircularProgressIndicator(),
   ];
 
   void _onItemTapped(int index) {
@@ -36,6 +34,7 @@ class _HomeState extends State<Home> {
   }
 
   refresh() {
+    _selectedIndex = 1;
     setState(() {});
   }
 
@@ -61,6 +60,7 @@ class _HomeState extends State<Home> {
                 notifyParent: refresh,
                 tasks: tasks,
               );
+              _widgetOptions[2] = AddTask(notifyParent: refresh);
             }
             return _widgetOptions.elementAt(_selectedIndex);
           },

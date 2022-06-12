@@ -8,7 +8,7 @@ import 'package:uuid/uuid.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  initPrefs();
+  // initPrefs();
   runApp(const MyApp());
 }
 

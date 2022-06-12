@@ -81,4 +81,10 @@ class TasksController {
     await prefs.remove(tasksKey);
     await prefs.setString(tasksKey, encodedData);
   }
+
+  Future<void> addTask(Task task) async {
+    List<Task> tasks = await _instance.tasks;
+    tasks.add(task);
+    await update(tasks);
+  }
 }
