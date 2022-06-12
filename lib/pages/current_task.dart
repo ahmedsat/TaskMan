@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:taskman/Models/task.dart';
+import 'package:taskman/Models/tasks_model.dart';
 
 class CurrentTask extends StatelessWidget {
   Task task;

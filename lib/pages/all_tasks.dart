@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:taskman/Models/task.dart';
+import 'package:taskman/Models/tasks_model.dart';
+import 'package:taskman/controllers/tasks_controler.dart';
 import 'package:taskman/pages/no_tasks_here.dart';
 
 class AllTasks extends StatelessWidget {
+  final Function() notifyParent;
   List<Task>? tasks;
-  AllTasks({this.tasks, Key? key}) : super(key: key);
+  TasksController tc = TasksController.instance;
+  AllTasks({this.tasks, Key? key, required this.notifyParent})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +22,7 @@ class AllTasks extends StatelessWidget {
             child: SizedBox(
               height: 50,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Text(
                     tasks![index].title,
@@ -28,6 +32,13 @@ class AllTasks extends StatelessWidget {
                   ),
                   Text(
                     tasks![index].deadLine,
+                  ),
+                  IconButton(
+                    onPressed: () async {
+                      await tc.deleteTask(tasks![index].id);
+                      notifyParent();
+                    },
+                    icon: const Icon(Icons.delete),
                   ),
                 ],
               ),
